@@ -2,7 +2,7 @@ import { LoadableState } from './ILoadableState';
 
 export interface IResult {
   total: number;
-  objectId: number[];
+  objectIDs: number[];
 }
 
 export interface ISearchResult extends IResult {
@@ -34,10 +34,14 @@ export interface ISearchPage {
 }
 
 export interface ISearchState {
-  total: number;
   entities: number[];
+  pages:
+    | {
+        [key: number]: number[];
+      }
+    | undefined;
   status: LoadableState;
   error: string;
-  page: ISearchPage;
+  pageInfo: ISearchPage;
   searchParam: ISearchParam;
 }

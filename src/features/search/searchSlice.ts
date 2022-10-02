@@ -1,6 +1,7 @@
 // GET LIST OF OBJECT SPLIT INTO 20 THEN FETCH THE 20 OBJECT
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { chunk, reduce, size } from 'lodash';
 import { RootState } from '../../app/store';
 import {
   IResult,
@@ -10,14 +11,14 @@ import {
 } from '../../model/ISearch';
 import { fetchSearchResults } from './searchAPI';
 
-const DEFAULT_PAGE_SIZE = 20;
+const DEFAULT_PAGE_SIZE = 4;
 
 export const initialState: ISearchState = {
-  total: 0,
   entities: [],
+  pages: undefined,
   status: 'idle',
   error: '',
-  page: {
+  pageInfo: {
     pageSize: DEFAULT_PAGE_SIZE,
     pageNumber: 0,
     totalNumber: 0,
@@ -57,7 +58,7 @@ export const fetchArts = createAsyncThunk(
       pageSize,
       params,
       total: data?.total,
-      objectId: data?.objectId,
+      objectIDs: data?.objectIDs,
     };
   }
 );
@@ -74,15 +75,31 @@ export const SearchSlice = createSlice({
       .addCase(fetchArts.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchArts.fulfilled, (state, action) => {
+      .addCase(fetchArts.fulfilled, (state, { payload }) => {
         state.status = 'idle';
-        // todo
-
-        console.log('data......', action.payload);
+        state.searchParam = payload.params;
+        state.entities = payload.objectIDs;
+        const splitTotal = chunk(payload.objectIDs, payload.pageSize);
+        const pages = reduce(
+          splitTotal,
+          (result, value, key) => {
+            return {
+              ...result,
+              [key]: value,
+            };
+          },
+          {}
+        );
+        state.pages = pages;
+        state.pageInfo = {
+          pageNumber: payload.pageNumber,
+          pageSize: payload.pageSize,
+          totalNumber: payload.total,
+          totalPages: size(pages),
+        };
       })
       .addCase(fetchArts.rejected, (state, { payload }) => {
         state.status = 'failed';
-
         if (payload) {
           console.log('error...........', payload);
         }

@@ -3,12 +3,16 @@ import counterReducer from '../features/counter/counterSlice';
 
 import searchReducer from '../features/search/searchSlice';
 import artReducer from '../features/art/artSlice';
+import departmentReducer from '../features/department/departmentSlice';
+import dialogReducer from '../features/dialog/dialogSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     search: searchReducer,
-    arts: artReducer,
+    art: artReducer,
+    department: departmentReducer,
+    dialog: dialogReducer,
   },
 });
 

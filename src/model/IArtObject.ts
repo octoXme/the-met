@@ -1,17 +1,17 @@
 import { LoadableState } from './ILoadableState';
 
 export interface IArtObjectState {
-  [key: string]: {
-    data: IArtObject;
-    status: LoadableState;
-    error: string;
-  };
+  data: IArtObject | undefined;
+  status: LoadableState;
+  error: string;
 }
 
 export interface IArtState {
-  status: LoadableState;
-  error: string;
-  entities: IArtObjectState | undefined;
+  entities:
+    | {
+        [key: string]: IArtObjectState;
+      }
+    | undefined;
 }
 
 export interface IArtObject {

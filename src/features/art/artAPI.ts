@@ -1,5 +1,3 @@
-const API = 'https://collectionapi.metmuseum.org/public/collection/v1/objects';
-
-export async function fetchArtObjectById(objectId: string) {
-  return await fetch(`${API}/${objectId}`);
+export async function fetchArtObjectById(objectId: number) {
+  return await fetch(`${process.env.REACT_APP_API_URL}/objects/${objectId}`);
 }

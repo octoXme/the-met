@@ -10,6 +10,9 @@ import {
   selectCount,
 } from './counterSlice';
 import styles from './Counter.module.css';
+import { fetchArts } from '../search/searchSlice';
+import { fetchArtById } from '../art/artSlice';
+import { fetchDepartments } from '../department/departmentSlice';
 
 export function Counter() {
   const count = useAppSelector(selectCount);
@@ -18,12 +21,32 @@ export function Counter() {
 
   const incrementValue = Number(incrementAmount) || 0;
 
+  const handleSubmit = () => {
+    dispatch(
+      fetchArts({ pageNumber: 0, pageSize: 20, params: { q: 'sunflower' } })
+    );
+  };
+
+  const handleGetArt = () => {
+    dispatch(fetchArtById(25111));
+  };
+
+  const handleGetAllDepartments = () => {
+    dispatch(fetchDepartments());
+  };
+
   return (
     <div>
       <div className={styles.row}>
+        <button onClick={handleSubmit}>HELLLLLLLLLLLLLLLLO</button>
+
+        <button onClick={handleGetArt}>get me some art</button>
+
+        <button onClick={handleGetAllDepartments}>get departments</button>
+
         <button
           className={styles.button}
-          aria-label="Decrement value"
+          aria-label='Decrement value'
           onClick={() => dispatch(decrement())}
         >
           -
@@ -31,7 +54,7 @@ export function Counter() {
         <span className={styles.value}>{count}</span>
         <button
           className={styles.button}
-          aria-label="Increment value"
+          aria-label='Increment value'
           onClick={() => dispatch(increment())}
         >
           +
@@ -40,7 +63,7 @@ export function Counter() {
       <div className={styles.row}>
         <input
           className={styles.textbox}
-          aria-label="Set increment amount"
+          aria-label='Set increment amount'
           value={incrementAmount}
           onChange={(e) => setIncrementAmount(e.target.value)}
         />
