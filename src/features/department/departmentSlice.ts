@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { RootState } from 'app/store';
 import { mapKeys, reduce } from 'lodash';
 import { IDepartmentResult, IDepartmentSate } from '../../model/IDepartment';
 import { fetchAllDepartments } from './departmentAPI';
@@ -30,11 +31,9 @@ export const departmentSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchDepartments.fulfilled, (state, { payload }) => {
-        console.log('aaaaaaaaaaaaa', payload);
         state.status = 'idle';
         state.error = '';
         state.entities = mapKeys(payload.departments, (x) => x.departmentId);
-        console.log('Object', Object.values(state.entities));
       })
       .addCase(fetchDepartments.rejected, (state) => {
         state.status = 'failed';
@@ -43,5 +42,7 @@ export const departmentSlice = createSlice({
       });
   },
 });
+
+export const getDepartments = (state: RootState) => state.department.entities;
 
 export default departmentSlice.reducer;

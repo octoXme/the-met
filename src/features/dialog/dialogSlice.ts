@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IDialogState } from 'model/IDialog';
 
-export const initialState = {
+export const initialState: IDialogState = {
   open: false,
   options: {
-    children: null,
+    children: undefined,
     maxWidth: 'sm',
   },
 };

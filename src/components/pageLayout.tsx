@@ -38,17 +38,11 @@ function ElevationScroll(props: Props) {
   });
 }
 
-/**
- * Manage the main page layout
- * @param {any} renderHeader page header - none scroll
- * @param {any} renderTopContent - on top of the content - in scroll
- * @param {any} renderContent - main content - in scroll
- */
-const PageLayout = ({
+export default function PageLayout({
   renderHeader,
   renderTopContent,
   ...props
-}: IDefaultPageLayout) => {
+}: IDefaultPageLayout) {
   return (
     <React.Fragment>
       <CssBaseline />
@@ -64,6 +58,4 @@ const PageLayout = ({
       </Container>
     </React.Fragment>
   );
-};
-
-export default PageLayout;
+}

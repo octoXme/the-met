@@ -13,6 +13,8 @@ import styles from './Counter.module.css';
 import { fetchArts } from '../search/searchSlice';
 import { fetchArtById } from '../art/artSlice';
 import { fetchDepartments } from '../department/departmentSlice';
+import SearchFilterForm from 'features/search/searchFilterForm';
+import { FormikValues } from 'formik';
 
 export function Counter() {
   const count = useAppSelector(selectCount);

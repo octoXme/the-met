@@ -1,7 +1,9 @@
+import { Breakpoint } from '@mui/material';
+
 export interface IDialogState {
   open: boolean;
   options: {
-    children: JSX.Element;
-    maxWidth: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    children: React.ReactElement | undefined;
+    maxWidth: Breakpoint | false;
   };
 }

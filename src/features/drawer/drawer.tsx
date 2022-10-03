@@ -5,7 +5,7 @@ import { CloseIcon } from 'components/icons';
 import IconButton from 'components/iconButton';
 import { makeStyles } from 'tss-react/mui';
 import { Box, Drawer, styled, Theme } from '@mui/material';
-import { IDrawerState } from '../../model/IDrawer';
+import { RootState } from 'app/store';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -20,7 +20,7 @@ const useStyles = makeStyles<{ width: number }>()(
     drawerPaper: {
       width: '100%',
       [theme.breakpoints.up('sm')]: {
-        width,
+        width: width,
       },
     },
     content: {
@@ -32,12 +32,12 @@ const useStyles = makeStyles<{ width: number }>()(
 
 const DefaultDrawer = () => {
   const dispatch = useDispatch();
-  const state = useSelector(({ open }: IDrawerState) => open);
-  const options = useSelector(({ options }: IDrawerState) => options);
+  const state = useSelector(({ drawer }: RootState) => drawer.open);
+  const options = useSelector(({ drawer }: RootState) => drawer.options);
   const { classes } = useStyles({ width: options?.width || 0 });
 
   const handleClose = (_event: any, reason: string) => {
-    if (options.onClose) {
+    if (options?.onClose) {
       options.onClose();
     }
     if (reason === 'backdropClick' && options.disableBackdropClick) return;
@@ -48,7 +48,7 @@ const DefaultDrawer = () => {
   return (
     <Drawer
       anchor={options?.anchor}
-      open={state}
+      open={state || false}
       onClose={handleClose}
       classes={{
         paper: classes.drawerPaper,

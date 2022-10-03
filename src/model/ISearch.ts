@@ -12,19 +12,23 @@ export interface ISearchResult extends IResult {
 }
 
 export interface ISearchParam {
-  q: string;
-  isHighlight?: boolean;
-  title?: string;
-  tags?: boolean;
-  departmentId?: string;
-  isOnView?: boolean;
-  artistOrCulture?: boolean;
-  medium?: string;
-  hasImages?: boolean;
-  geoLocation?: string;
-  dateBegin?: string;
-  dateEnd?: string;
+  [key: string]: string | number | boolean;
 }
+
+// export interface ISearchParam {
+//   q: string;
+//   isHighlight?: boolean;
+//   title?: string;
+//   tags?: boolean;
+//   departmentId?: string;
+//   isOnView?: boolean;
+//   artistOrCulture?: boolean;
+//   medium?: string;
+//   hasImages?: boolean;
+//   geoLocation?: string;
+//   dateBegin?: string;
+//   dateEnd?: string;
+// }
 
 export interface ISearchPage {
   pageSize: number;
@@ -43,5 +47,7 @@ export interface ISearchState {
   status: LoadableState;
   error: string;
   pageInfo: ISearchPage;
-  searchParam: ISearchParam;
+  searchParams: ISearchParam;
 }
+
+export type YearType = 'AC' | 'BC';

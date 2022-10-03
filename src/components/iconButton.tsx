@@ -6,13 +6,11 @@ interface IIconButton {
   [key: string]: any;
 }
 
-/**
- * Extension of material ui IconButton component
- * Add Tooltip by default
- * @param {string} title - explanation of the usage of the button
- * @param {any} icon
- */
-const IconButtonComponent = ({ title, icon, ...other }: IIconButton) => {
+export default function IconButtonComponent({
+  title,
+  icon,
+  ...other
+}: IIconButton) {
   return (
     <Tooltip title={title}>
       <IconButton aria-label={title} {...other}>
@@ -20,6 +18,4 @@ const IconButtonComponent = ({ title, icon, ...other }: IIconButton) => {
       </IconButton>
     </Tooltip>
   );
-};
-
-export default IconButtonComponent;
+}

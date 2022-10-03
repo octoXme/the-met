@@ -4,16 +4,14 @@ import { createTheme } from '@mui/material';
 import Drawer from 'features/drawer/drawer';
 import Dialog from 'features/dialog/dialog';
 import PageLayout from 'components/pageLayout';
+import SearchBar from 'features/search/searchBar';
+import { blue, deepOrange } from '@mui/material/colors';
 
 // overwrite default theme
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#333',
-    },
-    secondary: {
-      main: '#e4002b',
-    },
+    primary: blue,
+    secondary: deepOrange,
     background: {
       default: '#eff3f6',
     },
@@ -33,7 +31,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <PageLayout
-        renderHeader={<div>hahahhaha</div>}
+        renderHeader={<SearchBar />}
         renderTopContent={<div>whats up</div>}
         children={<div>children</div>}
       />

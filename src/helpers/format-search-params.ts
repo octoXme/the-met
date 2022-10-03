@@ -1,42 +1,33 @@
-import { isEmpty, isString, mapKeys } from 'lodash';
+import { isEmpty, reduce } from 'lodash';
+import { ISearchParam } from 'model/ISearch';
 
-// only consider string params
-const validValue = (value: any) => !isEmpty(value) && isString(value);
+const validValue = (value: string | number | boolean) => {
+  if (typeof value === 'number') {
+    return value !== null;
+  }
 
-// const isNumber = (value: unknown): value is number => {
-//   return !isNaN(Number(value));
-// };
+  if (typeof value === 'boolean') {
+    return value !== false || undefined;
+  }
 
-// const isDate = (value: unknown): value is string => {
-//   if (!isString(value)) {
-//       return false;
-//   }
-//   const date = momentFromString(value, "YYYY-MM-DD");
-//   return date.isValid();
-// };
+  return !isEmpty(value);
+};
 
-// const isString = (value: unknown): value is string => {
-//   return typeof value === "string";
-// };
-
-// const isObject = (value: unknown): value is Record<string, unknown> => {
-//   if (typeof value !== "object" || value == null || Array.isArray(value)) {
-//       return false;
-//   }
-//   return true;
-// };
-
-function formatSearchParams(params: any): string {
-  let url = '';
+function formatSearchParams(params: ISearchParam): string {
   if (isEmpty(params)) return '';
 
-  mapKeys(params, (value, key) => {
-    if (validValue(value)) {
-      url += `&${key}=${encodeURIComponent(value)}`;
-    }
-  });
+  return reduce(
+    params,
+    (result, value, key) => {
+      if (validValue(value)) {
+        console.log('value', value, key);
 
-  return url;
+        result += `&${key}=${encodeURIComponent(value)}`;
+      }
+      return result;
+    },
+    ''
+  );
 }
 
 export default formatSearchParams;
