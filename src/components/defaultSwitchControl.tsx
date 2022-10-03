@@ -2,13 +2,13 @@ import { FormControlLabel, Switch } from '@mui/material';
 import { ISwitch } from 'model/IInput';
 import React from 'react';
 
-const SwitchControl = ({
+export default function SwitchControl({
   onChange,
   field: { name, value },
   form: { setFieldValue },
   label,
   ...other
-}: ISwitch) => {
+}: ISwitch) {
   const handleChange = (e: React.ChangeEvent<any>) => {
     setFieldValue(name, e.target.checked);
     if (onChange) {
@@ -24,6 +24,4 @@ const SwitchControl = ({
       {...other}
     />
   );
-};
-
-export default SwitchControl;
+}

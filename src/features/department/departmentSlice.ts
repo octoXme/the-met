@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
-import { mapKeys, reduce } from 'lodash';
+import { mapKeys } from 'lodash';
 import { IDepartmentResult, IDepartmentSate } from '../../model/IDepartment';
-import { fetchAllDepartments } from './departmentAPI';
+import { fetchDepartmentsAPI } from './departmentAPI';
 
 export const initialState: IDepartmentSate = {
   status: 'idle',
@@ -13,7 +13,7 @@ export const initialState: IDepartmentSate = {
 export const fetchDepartments = createAsyncThunk(
   'search/fetchDepartments',
   async (): Promise<IDepartmentResult> => {
-    const result = await fetchAllDepartments();
+    const result = await fetchDepartmentsAPI();
     return await result.json();
   }
 );

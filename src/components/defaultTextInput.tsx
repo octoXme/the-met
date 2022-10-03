@@ -2,13 +2,13 @@ import { TextField } from '@mui/material';
 import { ITextInput } from 'model/IInput';
 import React from 'react';
 
-const TextInput = ({
+export default function TextInput({
   onChange,
   label,
   field: { name, value },
   form: { setFieldValue, errors },
   ...other
-}: ITextInput) => {
+}: ITextInput) {
   const handleChange = (e: React.ChangeEvent<any>) => {
     setFieldValue(name, e.target.value);
     if (onChange) {
@@ -35,6 +35,4 @@ const TextInput = ({
       {...other}
     />
   );
-};
-
-export default TextInput;
+}

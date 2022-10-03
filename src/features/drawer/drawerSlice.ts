@@ -18,7 +18,6 @@ export const DrawerSlice = createSlice({
   initialState,
   reducers: {
     openDrawer: (state, action) => {
-      console.log('hahahhhahhaha');
       state.open = true;
       state.options = { ...initialState.options, ...action.payload };
     },

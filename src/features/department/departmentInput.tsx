@@ -5,10 +5,9 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { ISelectInput } from 'model/IInput';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { fetchDepartments, getDepartments } from './departmentSlice';
 
 export default function DepartmentInput({
@@ -18,7 +17,7 @@ export default function DepartmentInput({
   ...other
 }: ISelectInput) {
   const dispatch = useAppDispatch();
-  const departments = useSelector(getDepartments);
+  const departments = useAppSelector(getDepartments);
 
   useEffect(() => {
     if (!departments) {

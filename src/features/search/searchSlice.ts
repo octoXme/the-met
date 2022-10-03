@@ -1,7 +1,5 @@
-// GET LIST OF OBJECT SPLIT INTO 20 THEN FETCH THE 20 OBJECT
-
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { chunk, reduce, size } from 'lodash';
+import { chunk, size } from 'lodash';
 import { RootState } from '../../app/store';
 import {
   IResult,
@@ -9,13 +7,12 @@ import {
   ISearchResult,
   ISearchState,
 } from '../../model/ISearch';
-import { fetchSearchResults } from './searchAPI';
+import { fetchSearchAPI } from './searchAPI';
 
-const DEFAULT_PAGE_SIZE = 4;
+export const DEFAULT_PAGE_SIZE = 5;
 
 export const initialState: ISearchState = {
   entities: [],
-  pages: undefined,
   status: 'idle',
   error: '',
   pageInfo: {
@@ -50,7 +47,7 @@ export const fetchArts = createAsyncThunk(
     pageSize: number;
     params: ISearchParam;
   }): Promise<ISearchResult> => {
-    const result = await fetchSearchResults(params);
+    const result = await fetchSearchAPI(params);
     const data: IResult = await result.json();
 
     return {
@@ -80,25 +77,15 @@ export const SearchSlice = createSlice({
         state.searchParams = payload.params;
         state.entities = payload.objectIDs;
         const splitTotal = chunk(payload.objectIDs, payload.pageSize);
-        const pages = reduce(
-          splitTotal,
-          (result, value, key) => {
-            return {
-              ...result,
-              [key]: value,
-            };
-          },
-          {}
-        );
-        state.pages = pages;
+
         state.pageInfo = {
           pageNumber: payload.pageNumber,
           pageSize: payload.pageSize,
           totalNumber: payload.total,
-          totalPages: size(pages),
+          totalPages: size(splitTotal),
         };
       })
-      .addCase(fetchArts.rejected, (state, { payload, meta, error }) => {
+      .addCase(fetchArts.rejected, (state, { error }) => {
         state.status = 'failed';
         state.entities = [];
         state.error = error.message || 'Something went wrong!';
@@ -111,5 +98,17 @@ export const { resetSearch } = SearchSlice.actions;
 export const getSearchStatus = (state: RootState) => state.search.status;
 
 export const getSearchParams = (state: RootState) => state.search.searchParams;
+
+export const getPageInfo = (state: RootState) => state.search.pageInfo;
+
+export const getSearchResults = (state: RootState): number[] => {
+  const pageNumber = state.search.pageInfo.pageNumber + 1;
+  const results = state.search.entities.slice(
+    0,
+    pageNumber * DEFAULT_PAGE_SIZE
+  );
+
+  return results;
+};
 
 export default SearchSlice.reducer;

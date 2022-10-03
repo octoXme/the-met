@@ -1,5 +1,5 @@
 import { Paper, Input, CircularProgress, Divider, Badge } from '@mui/material';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import DefaultButton from 'components/defaultButton';
 import IconButton from 'components/iconButton';
 import { SearchIcon, FilterIcon } from 'components/icons';
@@ -9,10 +9,10 @@ import isSearchStringValid from 'helpers/is-search-string-valid';
 import { isEqual } from 'lodash';
 import { ISearchParam } from 'model/ISearch';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 import SearchFilterForm from './searchFilterForm';
 import {
+  DEFAULT_PAGE_SIZE,
   fetchArts,
   getSearchParams,
   getSearchStatus,
@@ -51,8 +51,8 @@ export default function SearchBar() {
   const dispatch = useAppDispatch();
   const { classes } = useStyles();
 
-  const currentSearchParams = useSelector(getSearchParams);
-  const currentStatus = useSelector(getSearchStatus);
+  const currentSearchParams = useAppSelector(getSearchParams);
+  const currentStatus = useAppSelector(getSearchStatus);
   const [value, setValue] = useState(currentSearchParams.q);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function SearchBar() {
   }, [currentSearchParams]);
 
   const onSearchEvents = async (params: ISearchParam) => {
-    dispatch(fetchArts({ pageNumber: 0, pageSize: 20, params }));
+    dispatch(fetchArts({ pageNumber: 0, pageSize: DEFAULT_PAGE_SIZE, params }));
   };
 
   const handleChange = (

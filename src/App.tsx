@@ -1,16 +1,18 @@
-import { Counter } from './features/counter/Counter';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
 import Drawer from 'features/drawer/drawer';
 import Dialog from 'features/dialog/dialog';
 import PageLayout from 'components/pageLayout';
 import SearchBar from 'features/search/searchBar';
-import { blue, deepOrange } from '@mui/material/colors';
+import { deepOrange } from '@mui/material/colors';
+import SearchList from 'features/search/searchList';
 
 // overwrite default theme
 const theme = createTheme({
   palette: {
-    primary: blue,
+    primary: {
+      main: '#000',
+    },
     secondary: deepOrange,
     background: {
       default: '#eff3f6',
@@ -33,9 +35,9 @@ function App() {
       <PageLayout
         renderHeader={<SearchBar />}
         renderTopContent={<div>whats up</div>}
-        children={<div>children</div>}
-      />
-      <Counter />
+      >
+        <SearchList />
+      </PageLayout>
       <Drawer />
       <Dialog />
     </ThemeProvider>

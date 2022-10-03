@@ -1,6 +1,4 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-
 import searchReducer from '../features/search/searchSlice';
 import artReducer from '../features/art/artSlice';
 import departmentReducer from '../features/department/departmentSlice';
@@ -9,7 +7,6 @@ import drawerReducer from 'features/drawer/drawerSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     search: searchReducer,
     art: artReducer,
     department: departmentReducer,

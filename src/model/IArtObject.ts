@@ -7,6 +7,7 @@ export interface IArtObjectState {
 }
 
 export interface IArtState {
+  status: LoadableState;
   entities:
     | {
         [key: string]: IArtObjectState;

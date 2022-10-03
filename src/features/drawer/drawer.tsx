@@ -1,11 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { closeDrawer } from 'features/drawer/drawerSlice';
 import { CloseIcon } from 'components/icons';
 import IconButton from 'components/iconButton';
 import { makeStyles } from 'tss-react/mui';
 import { Box, Drawer, styled, Theme } from '@mui/material';
 import { RootState } from 'app/store';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -31,9 +31,9 @@ const useStyles = makeStyles<{ width: number }>()(
 );
 
 const DefaultDrawer = () => {
-  const dispatch = useDispatch();
-  const state = useSelector(({ drawer }: RootState) => drawer.open);
-  const options = useSelector(({ drawer }: RootState) => drawer.options);
+  const dispatch = useAppDispatch();
+  const state = useAppSelector(({ drawer }: RootState) => drawer.open);
+  const options = useAppSelector(({ drawer }: RootState) => drawer.options);
   const { classes } = useStyles({ width: options?.width || 0 });
 
   const handleClose = (_event: any, reason: string) => {

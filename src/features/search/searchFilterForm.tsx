@@ -1,10 +1,10 @@
+import { useAppSelector } from 'app/hooks';
 import DefaultButton from 'components/defaultButton';
 import SwitchControl from 'components/defaultSwitchControl';
 import TextInput from 'components/defaultTextInput';
 import DepartmentInput from 'features/department/departmentInput';
 import { Field, Formik, FormikHelpers } from 'formik';
 import { ISearchParam } from 'model/ISearch';
-import { useSelector } from 'react-redux';
 import { makeStyles } from 'tss-react/mui';
 import * as Yup from 'yup';
 import { getSearchParams } from './searchSlice';
@@ -47,7 +47,7 @@ const SearchFormSchema = Yup.object().shape({
 
 export default function SearchFilterForm(props: ISearchFilterForm) {
   const { classes } = useStyles();
-  const currentSearchParams = useSelector(getSearchParams);
+  const currentSearchParams = useAppSelector(getSearchParams);
 
   return (
     <Formik
@@ -94,9 +94,6 @@ export default function SearchFilterForm(props: ISearchFilterForm) {
                 label='Match artist name or culture field'
               />
             </div>
-
-            {/* // custom select or auto complete*/}
-
             {/* // custom */}
             <Field component={TextInput} name='dateBegin' label='From' />
             <Field component={TextInput} name='dateEnd' label='to' />
@@ -104,8 +101,8 @@ export default function SearchFilterForm(props: ISearchFilterForm) {
 
           <DefaultButton
             type='submit'
-            disabled={isSubmitting}
             variant='outlined'
+            disabled={isSubmitting}
             loading={isSubmitting}
           >
             Search
