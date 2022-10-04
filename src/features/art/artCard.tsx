@@ -9,6 +9,7 @@ import {
   getArtworkById,
   getArtworkByIdLoading,
 } from './artSlice';
+import fallbackImage from 'assets/img/no-photo.png';
 
 interface IArtCard {
   id: number;
@@ -76,7 +77,7 @@ export default function ArtCard({ id }: IArtCard) {
     );
 
   const handleError = () => {
-    setImageSrc(`${process.env.PUBLIC_URL}/img/no-photo.png`);
+    setImageSrc(fallbackImage);
     setLoading(false);
   };
 
