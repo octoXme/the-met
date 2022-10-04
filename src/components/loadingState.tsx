@@ -1,4 +1,4 @@
-import { BeeIcon } from 'components/icons';
+import { BlankIcon } from 'components/icons';
 import { Container, styled } from '@mui/material';
 import { theme } from 'themeConfig';
 
@@ -31,13 +31,13 @@ export default function LoadingState() {
     <Container maxWidth='sm'>
       <LoaderWrapper>
         <CustomLoader>
-          <BeeIcon fontSize='large' />
+          <BlankIcon fontSize='large' />
         </CustomLoader>
         <CustomLoader style={{ animationDelay: '.25s' }}>
-          <BeeIcon fontSize='medium' />
+          <BlankIcon fontSize='medium' />
         </CustomLoader>
         <CustomLoader style={{ animationDelay: '.5s' }}>
-          <BeeIcon fontSize='small' />
+          <BlankIcon fontSize='small' />
         </CustomLoader>
       </LoaderWrapper>
     </Container>

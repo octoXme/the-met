@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
-import { DetailIcon } from './icons';
+import { BlankIcon } from './icons';
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -46,7 +46,7 @@ export interface IListItem {
 }
 
 export default function ListItem({
-  icon = <DetailIcon />,
+  icon = <BlankIcon />,
   title,
   content,
   tooltip,

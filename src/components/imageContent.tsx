@@ -25,7 +25,7 @@ const useStyles = makeStyles()((theme) => ({
     flexDirection: 'column',
     gap: theme.spacing(1),
     height: '100%',
-    backgroundColor: theme.palette.grey[100],
+    backgroundColor: theme.palette.grey[200],
     color: theme.palette.action.disabled,
     textAlign: 'center',
   },
