@@ -74,9 +74,9 @@ export default function ArtCard({ id }: IArtCard) {
         children: <ArtObjectDetail art={artwork?.data} />,
       })
     );
-
-  const handleError = (e: any) => {
-    setImageSrc('/img/no-photo.png');
+    
+  const handleError = () => {
+    setImageSrc(`${process.env.PUBLIC_URL}/img/no-photo.png`);
     setLoading(false);
   };
 
