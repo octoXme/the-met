@@ -2,6 +2,7 @@
   "name": "the-met",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://octoxme.github.io/the-met",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -29,6 +30,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -53,6 +56,7 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.186"
+    "@types/lodash": "^4.14.186",
+    "gh-pages": "^4.0.0"
   }
 }
