@@ -1,6 +1,5 @@
 import { Button, CircularProgress } from '@mui/material';
 import React from 'react';
-import { makeStyles } from 'tss-react/mui';
 
 interface IDefaultButton {
   loading?: boolean;
@@ -17,12 +16,6 @@ interface IDefaultButton {
   [key: string]: any;
 }
 
-const useStyles = makeStyles()(() => ({
-  root: {
-    borderRadius: 4,
-  },
-}));
-
 export default function DefaultButton({
   loading,
   icon,
@@ -30,8 +23,6 @@ export default function DefaultButton({
   children,
   ...other
 }: IDefaultButton) {
-  const { classes } = useStyles();
-
   const startIcon = () => {
     if (loading) {
       return <CircularProgress size={24} color={color} />;
@@ -43,12 +34,7 @@ export default function DefaultButton({
   };
 
   return (
-    <Button
-      className={classes.root}
-      color={color}
-      startIcon={startIcon()}
-      {...other}
-    >
+    <Button color={color} startIcon={startIcon()} {...other}>
       {children}
     </Button>
   );

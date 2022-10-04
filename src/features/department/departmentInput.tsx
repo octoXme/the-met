@@ -1,21 +1,9 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { ISelectInput } from 'model/IInput';
+import SelectInput from 'components/formik/SelectInput';
 import { useEffect } from 'react';
 import { fetchDepartments, getDepartments } from './departmentSlice';
 
-export default function DepartmentInput({
-  field: { name, value },
-  form: { setFieldValue },
-  onChange,
-  ...other
-}: ISelectInput) {
+export default function DepartmentInput(props: any) {
   const dispatch = useAppDispatch();
   const departments = useAppSelector(getDepartments);
 
@@ -25,35 +13,9 @@ export default function DepartmentInput({
     }
   }, [departments, dispatch]);
 
-  const handleChange = (e: SelectChangeEvent<any>) => {
-    setFieldValue(name, e.target.value);
-    if (onChange) {
-      onChange(e.target.value, setFieldValue);
-    }
-  };
+  const options = departments?.map((item) => {
+    return { value: item.departmentId, label: item.displayName };
+  });
 
-  if (!departments) return null;
-
-  return (
-    <FormControl>
-      <InputLabel>Department</InputLabel>
-      <Select
-        name={name}
-        value={value || ''}
-        onChange={handleChange}
-        {...other}
-      >
-        <MenuItem value=''>None</MenuItem>
-        {Object.keys(departments).map((key: string, index) => {
-          const item = departments[index];
-          if (!item) return undefined;
-          return (
-            <MenuItem key={key} value={item.departmentId}>
-              {item.displayName}
-            </MenuItem>
-          );
-        })}
-      </Select>
-    </FormControl>
-  );
+  return <SelectInput options={options || []} {...props} />;
 }

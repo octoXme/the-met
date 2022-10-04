@@ -1,22 +1,16 @@
-import { Paper, Input, CircularProgress, Divider, Badge } from '@mui/material';
+import { Paper, Input, CircularProgress, Divider } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import DefaultButton from 'components/defaultButton';
 import IconButton from 'components/iconButton';
-import { SearchIcon, FilterIcon } from 'components/icons';
-import { closeDrawer, openDrawer } from 'features/drawer/drawerSlice';
-import { FormikHelpers } from 'formik';
+import { SearchIcon, CloseIcon } from 'components/icons';
 import isSearchStringValid from 'helpers/is-search-string-valid';
-import { isEqual } from 'lodash';
 import { ISearchParam } from 'model/ISearch';
 import { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
-import SearchFilterForm from './searchFilterForm';
 import {
   DEFAULT_PAGE_SIZE,
   fetchArts,
   getSearchParams,
   getSearchStatus,
-  initialState,
   resetSearch,
 } from './searchSlice';
 
@@ -27,7 +21,6 @@ const useStyles = makeStyles()((theme) => ({
     flex: '1 1 auto',
   },
   searchBar: {
-    borderRadius: 48 / 2,
     maxWidth: 480,
     width: '100%',
     display: 'flex',
@@ -39,11 +32,7 @@ const useStyles = makeStyles()((theme) => ({
   },
   divider: {
     height: 28,
-    margin: theme.spacing(0, 1),
-  },
-  badge: {
-    top: theme.spacing(1 / 2),
-    right: theme.spacing(1 / 2),
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -59,7 +48,7 @@ export default function SearchBar() {
     setValue(currentSearchParams.q);
   }, [currentSearchParams]);
 
-  const onSearchEvents = async (params: ISearchParam) => {
+  const onSearch = async (params: ISearchParam) => {
     dispatch(fetchArts({ pageNumber: 0, pageSize: DEFAULT_PAGE_SIZE, params }));
   };
 
@@ -72,7 +61,7 @@ export default function SearchBar() {
   const handleSearch = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     if (!isSearchStringValid(value)) return;
-    onSearchEvents({ ...currentSearchParams, q: value });
+    onSearch({ ...currentSearchParams, q: value });
   };
 
   const handleClear = () => {
@@ -80,39 +69,12 @@ export default function SearchBar() {
     dispatch(resetSearch());
   };
 
-  const handleReset = () => {
-    handleClear();
-    dispatch(closeDrawer());
-  };
-
-  const handleFormSubmit = (
-    values: ISearchParam,
-    formikHelpers: FormikHelpers<ISearchParam>
-  ): void => {
-    onSearchEvents(values).then(() => {
-      formikHelpers.setSubmitting(false);
-      dispatch(closeDrawer());
-    });
-  };
-
-  const openFilter = () =>
-    dispatch(
-      openDrawer({
-        header: (
-          <DefaultButton onClick={handleReset} color='inherit'>
-            Clear
-          </DefaultButton>
-        ),
-        children: <SearchFilterForm onSubmit={handleFormSubmit} />,
-      })
-    );
-
   return (
     <div className={classes.root}>
       <Paper className={classes.searchBar} component='form'>
         <Input
           className={classes.input}
-          placeholder='Search'
+          placeholder='Search The Met'
           onChange={handleChange}
           value={value}
           autoFocus
@@ -120,32 +82,21 @@ export default function SearchBar() {
           disabled={currentStatus === 'loading'}
         />
         {currentStatus === 'loading' && <CircularProgress size={20} />}
+        {currentSearchParams.q && (
+          <IconButton
+            title='Remove keyword'
+            onClick={handleClear}
+            icon={<CloseIcon fontSize='small' />}
+            disabled={currentStatus === 'loading'}
+          />
+        )}
         <Divider className={classes.divider} orientation='vertical' />
         <IconButton
           type='submit'
           title='Search art object by keywords'
           onClick={handleSearch}
-          icon={<SearchIcon />}
+          icon={<SearchIcon fontSize='small' />}
           disabled={currentStatus === 'loading'}
-        />
-        <IconButton
-          title='Search Filters'
-          onClick={openFilter}
-          icon={
-            <Badge
-              classes={{
-                badge: classes.badge,
-              }}
-              color='secondary'
-              variant='dot'
-              invisible={isEqual(
-                currentSearchParams,
-                initialState.searchParams
-              )}
-            >
-              <FilterIcon />
-            </Badge>
-          }
         />
       </Paper>
     </div>

@@ -9,7 +9,7 @@ import {
 } from '../../model/ISearch';
 import { fetchSearchAPI } from './searchAPI';
 
-export const DEFAULT_PAGE_SIZE = 5;
+export const DEFAULT_PAGE_SIZE = 20;
 
 export const initialState: ISearchState = {
   entities: [],
@@ -103,7 +103,7 @@ export const getPageInfo = (state: RootState) => state.search.pageInfo;
 
 export const getSearchResults = (state: RootState): number[] => {
   const pageNumber = state.search.pageInfo.pageNumber + 1;
-  const results = state.search.entities.slice(
+  const results = state.search.entities?.slice(
     0,
     pageNumber * DEFAULT_PAGE_SIZE
   );

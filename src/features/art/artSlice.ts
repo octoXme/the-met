@@ -17,7 +17,7 @@ export const fetchArtById = createAsyncThunk(
     } catch (err) {
       // Use `err.response.data` as `action.payload` for a `rejected` action,
       // by explicitly returning it using the `rejectWithValue()` utility
-      console.log('errrrrrrrrr', err);
+      console.log('FIX ME - ERROR OUT NOT COMING HERE', err);
       // return thunkAPI.rejectWithValue(err!.response?.data);
     }
   }
@@ -54,7 +54,6 @@ export const artSlice = createSlice({
         };
       })
       .addCase(fetchArtById.rejected, (state, { meta, error }) => {
-        console.log('something warong');
         state.status = 'failed';
 
         state.entities = {

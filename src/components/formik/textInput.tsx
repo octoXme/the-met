@@ -2,17 +2,28 @@ import { TextField } from '@mui/material';
 import { ITextInput } from 'model/IInput';
 import React from 'react';
 
+function toTitleCase(str: string) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+
 export default function TextInput({
   onChange,
   label,
   field: { name, value },
   form: { setFieldValue, errors },
+  autocapitalize,
+  helperText,
   ...other
 }: ITextInput) {
   const handleChange = (e: React.ChangeEvent<any>) => {
-    setFieldValue(name, e.target.value);
+    const str = e.target.value;
+    const val = autocapitalize ? toTitleCase(str) : str;
+
+    setFieldValue(name, val);
     if (onChange) {
-      onChange(e.target.value, setFieldValue);
+      onChange(val, setFieldValue);
     }
   };
 
@@ -31,7 +42,7 @@ export default function TextInput({
       onChange={handleChange}
       onBlur={handleBlur}
       error={!!fieldError}
-      helperText={fieldError}
+      helperText={fieldError || helperText}
       {...other}
     />
   );

@@ -1,7 +1,9 @@
-import { Card, CardActionArea, styled } from '@mui/material';
+import { Card, CardActionArea, Skeleton, styled } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import ImagePreview from 'components/image';
-import { useEffect } from 'react';
+import { openDialog } from 'features/dialog/dialogSlice';
+import { useEffect, useState } from 'react';
+import { theme } from 'themeConfig';
+import ArtObjectDetail from './artObjectDetail';
 import {
   fetchArtById,
   getArtworkById,
@@ -21,30 +23,79 @@ const CardTag = styled('div')(({ theme }) => ({
   zIndex: 1,
   borderRadius: theme.shape.borderRadius / 2,
   fontWeight: 700,
+  boxShadow: theme.shadows[1],
 }));
+
+const ImageTag = styled('img')({
+  display: 'block',
+  width: '100%',
+  filter: 'grayscale(1)',
+  borderWidth: '2px',
+  borderStyle: 'solid',
+  borderColor: 'transparent',
+  transition: theme.transitions.create('border', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.shortest,
+  }),
+
+  '&:hover': {
+    filter: 'inherit',
+    borderColor: theme.palette.primary.main,
+  },
+});
 
 export default function ArtCard({ id }: IArtCard) {
   const isLoading = useAppSelector(getArtworkByIdLoading(id));
   const artwork = useAppSelector(getArtworkById(id));
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     if (!isLoading && !artwork?.data) {
       dispatch(fetchArtById(id));
     }
+
+    if (artwork?.data) {
+      setImageSrc(
+        artwork?.data?.primaryImageSmall || artwork?.data?.primaryImage
+      );
+    }
   }, [artwork?.data, dispatch, id, isLoading]);
 
   if (isLoading) {
-    return <div>loading</div>;
+    return (
+      <div>
+        <Skeleton height={250} />
+      </div>
+    );
   }
+
+  const openArtObject = () =>
+    dispatch(
+      openDialog({
+        maxWidth: 'lg',
+        children: <ArtObjectDetail art={artwork?.data} />,
+      })
+    );
+
+  const handleError = (e: any) => {
+    setImageSrc('/img/no-photo.png');
+    setLoading(false);
+  };
 
   return (
     <Card variant='outlined'>
-      <CardActionArea>
-        <CardTag>{artwork?.data?.objectName}</CardTag>
-        <ImagePreview
-          name={artwork?.data?.title}
-          src={artwork?.data?.primaryImageSmall || artwork?.data?.primaryImage}
+      <CardActionArea onClick={openArtObject}>
+        <CardTag>
+          {artwork?.data?.objectName} <small>{id}</small>
+        </CardTag>
+        <ImageTag
+          alt={artwork?.data?.title}
+          src={imageSrc}
+          onLoad={() => setLoading(false)}
+          onError={handleError}
+          sx={{ display: loading ? 'none' : 'block' }}
         />
       </CardActionArea>
     </Card>

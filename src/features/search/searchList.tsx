@@ -16,7 +16,7 @@ export default function SearchList() {
   const pageInfo = useAppSelector(getPageInfo);
   const currentSearchParams = useAppSelector(getSearchParams);
 
-  const handleLoadMore = debounce((params) => {
+  const handleLoadMore = debounce(() => {
     dispatch(
       fetchArts({
         pageSize: pageInfo.pageSize,
@@ -35,12 +35,12 @@ export default function SearchList() {
       loadFunction={handleLoadMore}
       hasMore={pageInfo.totalPages > pageInfo.pageNumber + 1}
     >
-      <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
+      <Masonry
+        columns={{ xs: 1, sm: 2, lg: 3 }}
+        spacing={{ xs: 0, sm: 1, lg: 2 }}
+      >
         {searchResults?.map((id) => (
-          <div key={id}>
-            ID ---- {id}
-            <ArtCard id={id} />
-          </div>
+          <ArtCard key={id} id={id} />
         ))}
       </Masonry>
     </InfiniteLoadingList>

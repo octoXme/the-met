@@ -2,7 +2,7 @@ import { Tooltip, IconButton } from '@mui/material';
 
 interface IIconButton {
   title: string;
-  icon: JSX.Element;
+  icon: React.ReactElement;
   [key: string]: any;
 }
 

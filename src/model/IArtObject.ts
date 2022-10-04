@@ -73,7 +73,7 @@ export interface IArtObject {
   tags: ITag[];
   objectWikidata_URL: string;
   isTimelineWork: boolean;
-  GalleryNumber: boolean;
+  GalleryNumber: string;
 }
 
 export interface IConstituent {

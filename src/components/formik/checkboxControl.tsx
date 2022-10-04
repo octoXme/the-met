@@ -1,8 +1,8 @@
-import { FormControlLabel, Switch } from '@mui/material';
+import { Checkbox, FormControlLabel } from '@mui/material';
 import { ISwitch } from 'model/IInput';
 import React from 'react';
 
-export default function SwitchControl({
+export default function CheckboxControl({
   onChange,
   field: { name, value },
   form: { setFieldValue },
@@ -18,7 +18,13 @@ export default function SwitchControl({
 
   return (
     <FormControlLabel
-      control={<Switch checked={value ?? false} onChange={handleChange} />}
+      control={
+        <Checkbox
+          color='secondary'
+          checked={value ?? false}
+          onChange={handleChange}
+        />
+      }
       label={label}
       name={name}
       {...other}

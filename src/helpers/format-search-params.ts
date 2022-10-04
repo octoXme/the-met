@@ -2,6 +2,14 @@ import { isEmpty, reduce } from 'lodash';
 import { ISearchParam } from 'model/ISearch';
 
 const validValue = (value: string | number | boolean) => {
+  if (
+    typeof value !== 'string' &&
+    typeof value !== 'number' &&
+    typeof value !== 'boolean'
+  ) {
+    return false;
+  }
+
   if (typeof value === 'number') {
     return value !== null;
   }
@@ -20,8 +28,6 @@ function formatSearchParams(params: ISearchParam): string {
     params,
     (result, value, key) => {
       if (validValue(value)) {
-        console.log('value', value, key);
-
         result += `&${key}=${encodeURIComponent(value)}`;
       }
       return result;

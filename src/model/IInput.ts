@@ -11,10 +11,12 @@ export interface IInputBase {
     errors?: any;
   };
   label: string;
+  helperText?: string;
   [key: string]: any;
 }
 
 export interface ITextInput extends IInputBase {
+  autocapitalize: boolean;
   onChange: (
     e: React.ChangeEvent<any>,
     setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
@@ -22,6 +24,11 @@ export interface ITextInput extends IInputBase {
 }
 
 export interface ISelectInput extends IInputBase {
+  options: {
+    label: string;
+    value: string;
+  }[];
+  label: string;
   onChange: (
     e: SelectChangeEvent<any>,
     setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
