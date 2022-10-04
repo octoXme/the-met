@@ -8,7 +8,7 @@ export default function DepartmentInput(props: any) {
   const departments = useAppSelector(getDepartments);
 
   useEffect(() => {
-    if (!departments) {
+    if (departments.length === 0) {
       dispatch(fetchDepartments());
     }
   }, [departments, dispatch]);

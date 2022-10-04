@@ -65,11 +65,10 @@ export default function ListItem({
         </div>
       </HtmlTooltip>
       <div className={classes.content}>
-        {title && (
-          <Typography color='textSecondary' variant='subtitle2'>
-            {title}
-          </Typography>
-        )}
+        <Typography color='textSecondary' variant='subtitle2'>
+          {title}
+        </Typography>
+
         {content}
       </div>
     </div>

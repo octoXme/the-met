@@ -10,16 +10,9 @@ export const initialState: IArtState = {
 
 export const fetchArtById = createAsyncThunk(
   'search/fetchArt',
-  async (id: number, thunkAPI) => {
-    try {
-      const response = await fetchArtObjectByIdAPI(id);
-      return response.json();
-    } catch (err) {
-      // Use `err.response.data` as `action.payload` for a `rejected` action,
-      // by explicitly returning it using the `rejectWithValue()` utility
-      console.log('FIX ME - ERROR OUT NOT COMING HERE', err);
-      // return thunkAPI.rejectWithValue(err!.response?.data);
-    }
+  async (id: number) => {
+    const response = await fetchArtObjectByIdAPI(id);
+    return await response.json();
   }
 );
 
@@ -42,7 +35,6 @@ export const artSlice = createSlice({
         };
       })
       .addCase(fetchArtById.fulfilled, (state, { meta, payload }) => {
-        // todo
         state.status = 'idle';
         state.entities = {
           ...state.entities,
@@ -55,12 +47,11 @@ export const artSlice = createSlice({
       })
       .addCase(fetchArtById.rejected, (state, { meta, error }) => {
         state.status = 'failed';
-
         state.entities = {
           ...state.entities,
           [meta.arg]: {
             status: 'failed',
-            error: error.message || 'Something went wrong!!!!',
+            error: error.message || 'Something went wrong :(',
             date: undefined,
           },
         };

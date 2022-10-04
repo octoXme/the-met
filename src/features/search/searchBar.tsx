@@ -52,9 +52,7 @@ export default function SearchBar() {
     dispatch(fetchArts({ pageNumber: 0, pageSize: DEFAULT_PAGE_SIZE, params }));
   };
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target?.value);
   };
 

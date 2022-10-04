@@ -9,6 +9,7 @@ import {
 import Masonry from '@mui/lab/Masonry';
 import InfiniteLoadingList from 'components/infiniteLoadingList';
 import { debounce, isEmpty } from 'lodash';
+import { Typography } from '@mui/material';
 
 export default function SearchList() {
   const dispatch = useAppDispatch();
@@ -26,7 +27,12 @@ export default function SearchList() {
     );
   }, 300);
 
-  if (!searchResults) return null; // empty state
+  if (!searchResults)
+    return (
+      <Typography variant='h5'>
+        No results match your search criteria!
+      </Typography>
+    ); // empty state
 
   return (
     <InfiniteLoadingList

@@ -1,17 +1,14 @@
-import React from 'react';
 import { BeeIcon } from 'components/icons';
-import { makeStyles } from 'tss-react/mui';
 import { Container, styled } from '@mui/material';
+import { theme } from 'themeConfig';
 
-const useStyles = makeStyles()((theme) => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: theme.spacing(1),
-    minHeight: 128,
-  },
-}));
+const LoaderWrapper = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: theme.spacing(1),
+  minHeight: 128,
+});
 
 const CustomLoader = styled('div')({
   animationDuration: '1s',
@@ -30,10 +27,9 @@ const CustomLoader = styled('div')({
  * A simple component that being used when data is loading
  */
 export default function LoadingState() {
-  const { classes } = useStyles();
   return (
     <Container maxWidth='sm'>
-      <div className={classes.root}>
+      <LoaderWrapper>
         <CustomLoader>
           <BeeIcon fontSize='large' />
         </CustomLoader>
@@ -43,7 +39,7 @@ export default function LoadingState() {
         <CustomLoader style={{ animationDelay: '.5s' }}>
           <BeeIcon fontSize='small' />
         </CustomLoader>
-      </div>
+      </LoaderWrapper>
     </Container>
   );
 }

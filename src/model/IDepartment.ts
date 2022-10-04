@@ -12,9 +12,5 @@ export interface IDepartment {
 export interface IDepartmentSate {
   status: LoadableState;
   error: string;
-  entities:
-    | {
-        [departmentId: number]: IDepartment;
-      }
-    | undefined;
+  entities: IDepartment[];
 }

@@ -64,11 +64,7 @@ export default function ArtCard({ id }: IArtCard) {
   }, [artwork?.data, dispatch, id, isLoading]);
 
   if (isLoading) {
-    return (
-      <div>
-        <Skeleton height={250} />
-      </div>
-    );
+    return <Skeleton height={250} />;
   }
 
   const openArtObject = () =>
